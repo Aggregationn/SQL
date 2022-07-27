@@ -1,0 +1,35 @@
+CREATE TABLE store (id INTEGER PRIMARY KEY, item TEXT, section TEXT, price INTEGER, popularity INTEGER);
+
+INSERT INTO store VALUES 
+
+(1, "beans", "bulk", 2.49, 99),
+(2, "potatoes", "bulk" , 2.99, 92),
+(3, "rice","bulk", 1.99 , 89),
+(4, "pork", "meat", 10.99, 83),
+(5, "floss", "hygiene", 0.99, 42),
+(6, "mangos", "produce", 4.99, 78),
+(7, "peas", "frozen", 0.99, 52),
+(8, "toothpaste", "hygiene", 2.99, 62),
+(9, "popcorn", "snacks", 3.49, 45),
+(10, "t-shirt", "clothing", 7.49, 100),
+(11, "socks", "clothing", 4.79, 97),
+(12, "steak", "meat", 9.99, 64),
+(13, "rolled oats", "snacks", 1.99, 34),
+(14, "yogurt", "dairy", 6.99, 62),
+(15, "cheese", "dairy", 3.99, 75);
+
+--Display the database ordered by price
+SELECT * FROM store
+ORDER BY price DESC;
+
+--What are the least popular items?
+SELECT item, popularity, price 
+FROM store
+ORDER BY popularity ASC
+LIMIT 5;
+
+--What is the avg price of items in the dairy section?
+SELECT AVG (price) AS "avg dairy item price"
+FROM store
+WHERE section = "dairy" ;
+
