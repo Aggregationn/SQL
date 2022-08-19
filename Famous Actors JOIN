@@ -1,0 +1,27 @@
+CREATE TABLE famous_actors 
+(id INTEGER PRIMARY KEY AUTOINCREMENT,
+ fullname TEXT,
+ age INTEGER);
+    
+INSERT INTO famous_actors (fullname, age) VALUES ("Ryan Reynolds", 45);
+INSERT INTO famous_actors (fullname, age) VALUES ("Tom Holland", 26);
+INSERT INTO famous_actors (fullname, age) VALUES ("Blake Lively", 34);
+INSERT INTO famous_actors (fullname, age) VALUES ("Zendaya Coleman", 25);
+INSERT INTO famous_actors (fullname, age) VALUES ("Ben Affleck", 50);
+INSERT INTO famous_actors (fullname, age) VALUES ("Jennifer Lopez", 53);
+
+CREATE TABLE partners 
+(id INTEGER PRIMARY KEY AUTOINCREMENT,
+ movie_star1_id INTEGER,
+ movie_star2_id INTEGER);
+
+INSERT INTO partners (movie_star1_id, movie_star2_id) VALUES (1, 3);
+INSERT INTO partners (movie_star1_id, movie_star2_id) VALUES (2, 4);
+INSERT INTO partners (movie_star1_id, movie_star2_id) VALUES (5, 6);
+
+--Returns actors with their partners
+SELECT a.fullname, b.fullname AS partner_fullname
+FROM partners 
+JOIN famous_actors a ON partners.movie_star1_id = a.id 
+JOIN famous_actors b ON partners.movie_star2_id = b.id
+;
