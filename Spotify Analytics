@@ -60,3 +60,11 @@ GROUP BY track_name
 ORDER BY popularity DESC
 LIMIT 10
 ;
+
+#5. What song had the most tempo with the loudness being greater then -4?
+SELECT track_name, MAX(tempo), loudness
+FROM BIT_DB.Spotifydata
+WHERE loudness > '-4'
+GROUP BY track_name
+ORDER BY MAX(tempo) DESC
+;
