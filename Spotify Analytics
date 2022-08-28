@@ -28,8 +28,9 @@ time_signature integer NOT NULL
 
 #Next, I explored the data using the following SQL. 
 
-#1. Calculate the average popularity for each artist. Then, for each artist with a popularity of 90 or above, show their name, average popularity and label them a 
-"Top Star".
+#1. Calculate the average popularity for each artist. 
+Then, for each artist with a popularity of 90 or above,
+show their name, average popularity and label them a "Top Star".
 WITH popular_avg_CTE AS 
 (
   SELECT artist_name, AVG (popularity) AS popularity
