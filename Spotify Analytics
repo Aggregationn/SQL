@@ -28,7 +28,23 @@ time_signature integer NOT NULL
 
 #Next, I explored the data using the following SQL. 
 
-#1. What is the avg popularity, danceability, and energy by artist and track?
+#1. Calculate the average popularity for each artist. Then, for each artist with a popularity of 90 or above, show their name, average popularity and label them a 
+"Top Star".
+WITH popular_avg_CTE AS 
+(
+  SELECT artist_name, AVG (popularity) AS popularity
+  FROM Spotifydata
+  WHERE popularity >= 90
+  GROUP BY artist_name
+)
+
+SELECT popularity, artist_name, 'Top Star' AS tag
+FROM popular_avg_CTE
+GROUP BY artist_name
+ORDER BY popularity DESC
+;
+
+#2. What is the avg popularity, danceability, and energy by artist and track?
 SELECT
 AVG (danceability),
 AVG (popularity),
@@ -39,21 +55,21 @@ FROM BIT_DB.Spotifydata
 GROUP BY artist_name, track_id
 ;
 
-#2. Who are the top 10 artists based on popularity?
+#3. Who are the top 10 artists based on popularity?
 SELECT popularity, artist_name
 FROM BIT_DB.Spotifydata
 ORDER BY popularity DESC
 LIMIT 10
 ;
 
-#3. What artist released the longest song?
+#4. What artist released the longest song?
 SELECT artist_name, duration_ms
 FROM BIT_DB.Spotifydata
 ORDER BY duration_ms DESC
 LIMIT 1
 ;
 
-#4. What's the average danceability for the 10 most popular songs?
+#5. What's the average danceability for the 10 most popular songs?
 SELECT AVG (danceability) AS avg_danceability, track_name, popularity
 FROM BIT_DB.Spotifydata
 GROUP BY track_name
@@ -61,7 +77,7 @@ ORDER BY popularity DESC
 LIMIT 10
 ;
 
-#5. What song had the most tempo with the loudness being greater then -4?
+#6. What song had the most tempo with the loudness being greater then -4?
 SELECT track_name, MAX(tempo), loudness
 FROM BIT_DB.Spotifydata
 WHERE loudness > '-4'
