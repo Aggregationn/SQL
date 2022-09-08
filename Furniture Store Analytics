@@ -121,7 +121,7 @@ INSERT INTO sales(transaction_date,product,price,payment_type,name,city,state,co
 
 SELECT * FROM sales;
 
--- What country had the highest sales of chairs using Visa as payment?
+#1. What country had the highest sales of chairs using Visa as payment?
 
 SELECT country, COUNT (product) AS num_of_chairs
 FROM sales
@@ -129,7 +129,7 @@ WHERE product = "Chair" AND payment_type = "Visa"
 GROUP BY country 
 ORDER BY COUNT (product) DESC;
 
--- What is the avg amount of money spent per country that bought more than 1 item? 
+#2. What is the avg amount of money spent per country that bought more than 1 item? 
 
 SELECT country, AVG (price) AS avg_spent_counry, COUNT (product) AS product_count
 FROM sales
@@ -138,7 +138,7 @@ HAVING product_count > 1
 ORDER BY product_count DESC
 ;
 
--- What countries spent more than 10,000 total?
+#3. What countries spent more than 10,000 total?
 
 SELECT country, SUM (price),
 CASE
@@ -151,14 +151,14 @@ GROUP BY country
 ORDER BY SUM (price) DESC
 ;
 
--- What is the lowest selling item?
+#4. What is the lowest selling item?
 
 SELECT product, COUNT (product) AS items_sold
 FROM sales
 GROUP BY product
 ORDER BY COUNT (product) ASC;
 
--- What countries bought both a couch on 1/6/09?
+#5. What countries bought both a couch on 1/6/09?
 
 SELECT country
 FROM sales
