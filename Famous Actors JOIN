@@ -1,3 +1,5 @@
+# In the following SQL I joined two tables that I created to show the actors and there partners side by side.
+
 CREATE TABLE famous_actors 
 (id INTEGER PRIMARY KEY AUTOINCREMENT,
  fullname TEXT,
