@@ -11,7 +11,7 @@ FROM BIT_DB.JanSales
 WHERE Product='iPhone'
 ;
 
-#3. Figure out the customer segmentation in regards to there purchasing habits in March
+#3. Figure out the customer segmentation in regards to there purchasing habits in May
 SELECT ROUND((price*quantity), 2) AS total,  orderID,
 CASE
     WHEN ROUND((price*quantity), 2) < 100 THEN 'low'
