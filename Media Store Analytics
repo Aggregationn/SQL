@@ -129,3 +129,15 @@ ON alb.ArtistId = art.ArtistId
 JOIN chinook.invoice_items i
 ON t.TrackId = i.TrackId
 ;
+
+#16. Figure out the customer segmentation and split them up into low, medium and high buyers
+
+SELECT customerId, SUM(total),
+CASE
+    WHEN SUM(total) < 10 THEN 'low spender'
+    WHEN SUM(total) < 50 THEN 'Medium spender'
+    ELSE 'High spender'
+END AS segmentation
+FROM chinook.invoices
+GROUP BY customerId
+;
