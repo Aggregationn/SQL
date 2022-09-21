@@ -1,4 +1,4 @@
-# In this SQL I created two tables with simple information and then carefully altered data from them.
+# In this SQL I created two tables with simple information and then carefully altered the data and tables.
 
 CREATE TABLE People
 (   id INTEGER PRIMARY KEY AUTOINCREMENT,
