@@ -1,0 +1,43 @@
+# Im this SQL I created two tables with simple information and then carefully altered data from them
+
+CREATE TABLE People
+(   id INTEGER PRIMARY KEY AUTOINCREMENT,
+    First_name TEXT,
+    Last_name text,
+    age INTEGER     );
+    
+INSERT INTO People (First_name, Last_name, age) VALUES ("John", "Steele", 35);
+   
+INSERT INTO People (First_name, Last_name, age) VALUES ("Dasiy", "Rose", 200);
+
+INSERT INTO People (First_name, Last_name, age) VALUES ("Connor", "Konner", 54);
+
+INSERT INTO People (First_name, Last_name, age) VALUES ("Sophia", "Ivy", 42);
+
+    CREATE TABLE Hours_spent
+(   Person_id INTEGER PRIMARY KEY AUTOINCREMENT,
+    Hrs_sleep integer,
+    Hrs_work INTEGER,
+    Hrs_browse_internet integer,
+    Mood text   );
+
+INSERT INTO Hours_spent (Hrs_sleep, Hrs_work, Hrs_browse_internet, Mood) VALUES (6, 3.5,7, "Tired");
+INSERT INTO Hours_spent (Hrs_sleep, Hrs_work, Hrs_browse_internet, Mood) VALUES (7, 7.5,1, "Energized");
+INSERT INTO Hours_spent (Hrs_sleep, Hrs_work, Hrs_browse_internet, Mood) VALUES (9, 9,4, "Sleepy");
+INSERT INTO Hours_spent (Hrs_sleep, Hrs_work, Hrs_browse_internet, Mood) VALUES (2, 13,1.5, "Exhausted");
+
+SELECT * FROM People;
+SELECT * FROM Hours_spent;
+
+UPDATE hours_spent SET mood = 'Dead' WHERE Person_id = 4; 
+SELECT * FROM Hours_spent;
+ 
+DELETE FROM People WHERE age > 122 ;
+SELECT * FROM people;
+
+ALTER TABLE People ADD gender TEXT default "unknown";
+SELECT * FROM people;
+
+UPDATE people SET gender = "male" WHERE id = 1;
+UPDATE people SET gender = "female" WHERE id = 4;
+SELECT * FROM people;
