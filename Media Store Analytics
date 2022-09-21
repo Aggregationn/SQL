@@ -1,6 +1,6 @@
  # For this project, I downloaded a dataset from Github.
  # Next, I analyzed & anwered questions about the data using the following SQL.
- 
+  
 #1. Which sales agent made the most in sales in 2009?
 
 SELECT ROUND(SUM(i.Total), 2) AS total, e.FirstName, e.LastName
