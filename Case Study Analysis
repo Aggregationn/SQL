@@ -1,0 +1,85 @@
+# In the following SQL I am analyzing the cleaned data figuring out how users are using the app differently.
+
+# Preferred type of bike by user type
+SELECT user_type, rideable_type, COUNT(rideable_type) AS 'bike count'
+FROM cycle.rider
+GROUP BY user_type, rideable_type
+;
+
+# Average ride length by user type
+SELECT AVG(ride_length) AS 'avg ride length', user_type
+FROM cycle.rider
+GROUP BY user_type
+;
+
+# Count of different user types
+SELECT user_type, COUNT (user_type) AS 'user count'
+FROM cycle.rider
+GROUP BY user_type
+;
+
+# Ride length by day of the week per user type
+SELECT user_type,
+CASE
+WHEN day_of_week = 0 THEN 'Sunday'
+WHEN day_of_week = 1 THEN 'Monday'
+WHEN day_of_week = 2 THEN 'Tuesday'
+WHEN day_of_week = 3 THEN 'Wednesday'
+WHEN day_of_week = 4 THEN 'Thursday'
+WHEN day_of_week = 5 THEN 'Friday'
+WHEN day_of_week = 6 THEN 'Saturday'
+END AS 'days of week',
+SUM(ride_length) AS Minutes
+FROM cycle.rider
+GROUP BY day_of_week, user_type
+;
+
+# Rides count by day of the week per user type
+SELECT user_type,
+CASE
+WHEN day_of_week = 0 THEN 'Sunday'
+WHEN day_of_week = 1 THEN 'Monday'
+WHEN day_of_week = 2 THEN 'Tuesday'
+WHEN day_of_week = 3 THEN 'Wednesday'
+WHEN day_of_week = 4 THEN 'Thursday'
+WHEN day_of_week = 5 THEN 'Friday'
+WHEN day_of_week = 6 THEN 'Saturday'
+END AS 'days of week',
+COUNT(ride_id) AS 'rides per day'
+FROM cycle.rider
+GROUP BY day_of_week, user_type
+;
+
+# Average length of rides with the same start and end station
+SELECT AVG(ride_length) AS 'avg ride length', COUNT(ride_id) AS count
+FROM cycle.rider
+WHERE start_station_name=end_station_name
+;
+
+# Average length of rides with different start and end station
+SELECT AVG(ride_length) AS 'avg ride length', COUNT(ride_id) AS count
+FROM cycle.rider
+WHERE start_station_name<>end_station_name
+;
+
+# (casual) Ride count, average ride length and sum ride length by month
+SELECT COUNT(ride_id) AS 'ride count',
+AVG (ride_length) AS avg,
+SUM (ride_length) AS sum,
+STRFTIME('%m', started_at) AS month
+FROM cycle.rider
+WHERE user_type = 'casual'
+GROUP BY month
+ORDER BY month
+;
+
+# (member) Ride count, average ride length and sum ride length by month
+SELECT COUNT(ride_id) AS 'ride count',
+AVG (ride_length) AS avg,
+SUM (ride_length) AS sum,
+STRFTIME('%m', started_at) AS month
+FROM cycle.rider
+WHERE user_type = 'member'
+GROUP BY month
+ORDER BY month
+;
