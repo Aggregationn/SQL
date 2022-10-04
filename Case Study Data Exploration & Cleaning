@@ -1,20 +1,20 @@
-# For this project I have been given a data and made a Database, this is exploation and cleaning of that data.
-# Note, I did not need to check for spaces before or after any values, when I made the database in DB Browser I trimmed all the imrported values
+# For this project I have been given data and made a database, this is exploration and cleaning of that data.
+# Note, I did not need to check for spaces before or after any values, when I made the database in DB Browser (SQLite) I trimmed all the imported values.
 
 # Creating column for ride length
-ALTER TABLE rider
+ALTER TABLE cycle.rider
 ADD ride_length TIME
 ;
-UPDATE rider
-SET ride_length = (julianday(ended_at)-julianday(started_at))
+UPDATE cycle.rider
+SET ride_length = (JULIANDAY(ended_at)-JULIANDAY(started_at))
 ;
 
 # Creating column for the days of the week
-ALTER TABLE rider
+ALTER TABLE cycle.rider
 ADD day_of_week INTEGER
 ;
-UPDATE rider
-SET day_of_week = strftime('%w', started_at)
+UPDATE cycle.rider
+SET day_of_week = STRFTIME('%w', started_at)
 ;
 
 # Selecting all NULL values
@@ -32,12 +32,12 @@ start_lat IS NULL OR
 start_lng IS NULL OR
 end_lat IS NULL OR
 end_lng IS NULL OR
-member_casual IS NULL OR
+user_type IS NULL OR
 ride_length IS NULL OR 
 day_of_week IS NULL
 ;
 
-# Checking for duplicate values
+# Checking for duplicate rows
 SELECT ride_id, COUNT(ride_id)
 FROM cycle.rider
 GROUP BY ride_id
@@ -54,14 +54,14 @@ SELECT DISTINCT member_casual
 FROM cycle.rider
 ;
 
-# Checking to see if ride lengths make sense
+# Selecting rows where ride length is less or equal to 0
 SELECT *
 FROM cycle.rider
 WHERE ride_length <= 0
  ;
 
-# Selecting any rides that lasted more than 16 hours
-SELECT ride_length
+# Selecting rides that lasted more than 16 hours
+SELECT *
 FROM cycle.rider
 WHERE
 ride_length >= 960
@@ -82,9 +82,9 @@ start_lat IS NULL OR
 start_lng IS NULL OR
 end_lat IS NULL OR
 end_lng IS NULL OR
-member_casual IS NULL OR 
-day_of_week IS NULL OR
-ride_length IS NULL
+user_type IS NULL OR 
+ride_length IS NULL OR
+day_of_week IS NULL
 ;
 
 # Deleting duplicate rows with the same ride_id
