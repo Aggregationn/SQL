@@ -1,6 +1,7 @@
-– I did not need to check for spaces before or after any values as when I made the database in DB Browser I checked the box to trim all the imported values
+# For this project I have been given a data and made a Database, this is exploation and cleaning of that data.
+# Note, I did not need to check for spaces before or after any values, when I made the database in DB Browser I trimmed all the imrported values
 
-–Creating column for ride length
+# Creating column for ride length
 ALTER TABLE rider
 ADD ride_length TIME
 ;
@@ -8,7 +9,7 @@ UPDATE rider
 SET ride_length = (julianday(ended_at)-julianday(started_at))
 ;
 
-–Creating column for the days of the week
+# Creating column for the days of the week
 ALTER TABLE rider
 ADD day_of_week INTEGER
 ;
@@ -16,7 +17,7 @@ UPDATE rider
 SET day_of_week = strftime('%w', started_at)
 ;
 
-–Selecting all NULL values
+# Selecting all NULL values
 SELECT * FROM cycle.rider
 WHERE
 ride_id IS NULL OR
@@ -32,35 +33,77 @@ start_lng IS NULL OR
 end_lat IS NULL OR
 end_lng IS NULL OR
 member_casual IS NULL OR
-day_of_week IS NULL OR
-ride_length IS NULL
+ride_length IS NULL OR 
+day_of_week IS NULL
 ;
 
-–Checking for duplicate values
+# Checking for duplicate values
 SELECT ride_id, COUNT(ride_id)
 FROM cycle.rider
 GROUP BY ride_id
 HAVING COUNT(ride_id) > 1
 ;
 
-– Making sure there are only 3 rideable types
+# Making sure there are only 3 rideable types
 SELECT DISTINCT rideable_type
 FROM cycle.rider
 ;
 
-– Making sure there are only 2 membership types
+# Making sure there are only 2 membership types
 SELECT DISTINCT member_casual
 FROM cycle.rider
 ;
 
-– Checking to see if ride lengths make sense
+# Checking to see if ride lengths make sense
 SELECT *
 FROM cycle.rider
 WHERE ride_length <= 0
  ;
 
-– Selecting any rides that lasted more than 16 hours
+# Selecting any rides that lasted more than 16 hours
 SELECT ride_length
+FROM cycle.rider
+WHERE
+ride_length >= 960
+;
+
+# Deleting all NULL values
+Delete FROM cycle.rider
+WHERE
+ride_id IS NULL OR
+rideable_type IS NULL OR
+started_at IS NULL OR
+ended_at IS NULL OR
+start_station_name IS NULL OR
+start_station_id IS NULL OR
+end_station_name IS NULL OR
+end_station_id IS NULL OR
+start_lat IS NULL OR
+start_lng IS NULL OR
+end_lat IS NULL OR
+end_lng IS NULL OR
+member_casual IS NULL OR 
+day_of_week IS NULL OR
+ride_length IS NULL
+;
+
+# Deleting duplicate rows with the same ride_id
+DELETE FROM cycle.rider
+WHERE ride_id IN
+( SELECT ride_id
+FROM cycle.rider
+GROUP BY ride_id
+HAVING COUNT(ride_id) > 1 )
+;
+
+# Deleting outliers
+DELETE
+FROM cycle.rider
+WHERE ride_length <= 0
+;
+
+# Deleting any rides that lasted more than 16 hours
+DELETE
 FROM cycle.rider
 WHERE
 ride_length >= 960
