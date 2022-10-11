@@ -1,4 +1,4 @@
-# In the following SQL I am analyzing the cleaned data figuring out how users are using the app differently.
+# In the following SQL I am analyzing the cleaned data in order to figure out how users are using the app differently.
 
 # Preferred type of bike by user type
 SELECT user_type, rideable_type, COUNT(rideable_type) AS 'bike count'
