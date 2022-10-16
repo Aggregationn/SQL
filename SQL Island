@@ -90,8 +90,7 @@ WHERE job = "baker" OR job = "dealer" OR job = "merchant"
 ;
     
 # How much gold do different inhabitants have on average, depending on their state
-SELECT state, SUM(inhabitant.gold)
-,AVG(inhabitant.gold)
+SELECT state, SUM(inhabitant.gold) ,AVG(inhabitant.gold)
 FROM inhabitant
 GROUP BY state
 ORDER BY AVG(inhabitant.gold)
