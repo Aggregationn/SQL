@@ -137,8 +137,16 @@ GROUP BY country
 HAVING product_count > 1
 ORDER BY product_count DESC
 ;
+#3. What day had the most sales? 
 
-#3. What countries spent more than 10,000 total?
+SELECT COUNT (ID) AS sales , transaction_date
+FROM store.sales
+GROUP BY transaction_date
+ORDER BY sales DESC
+LIMIT 1
+;
+
+#4. What countries spent more than 10,000 total?
 
 SELECT country, SUM (price),
 CASE
@@ -151,16 +159,25 @@ GROUP BY country
 ORDER BY SUM (price) DESC
 ;
 
-#4. What is the lowest selling item?
+#5. What is the lowest selling item?
 
 SELECT product, COUNT (product) AS items_sold
 FROM sales
 GROUP BY product
 ORDER BY COUNT (product) ASC;
 
-#5. What countries bought both a couch on 1/6/09?
+#6. What countries bought a couch on 1/6/09?
 
 SELECT country
 FROM sales
 WHERE product= 'Couch' AND transaction_date= '1/6/09'
+;
+
+#7. What day had the most profit?
+
+SELECT SUM (price) AS profit, transaction_date
+FROM store.sales
+GROUP BY transaction_date
+ORDER BY profit DESC
+LIMIT 1
 ;
