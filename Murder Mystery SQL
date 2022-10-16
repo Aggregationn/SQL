@@ -1,0 +1,83 @@
+# The following SQL code was written to solve the mystery on https://mystery.knightlab.com/
+
+# First, find the relevant crime scene report for a murder taking place on Jan 15, 2018 in SQL City
+
+SELECT * FROM crime_scene_report
+WHERE date = 20180115 AND city = "SQL City" AND type = "murder"
+;   
+   
+# Identify 2 witnesses.
+
+SELECT * FROM person
+WHERE address_street_name='Northwestern Dr'
+ORDER BY address_number DESC LIMIT 1
+;
+
+SELECT * FROM person
+WHERE name LIKE '%Annabel%'
+AND address_street_name='Franklin Ave'
+;
+  
+# Write a query that shows the interview transcripts for our two subjects
+
+SELECT p.name, i.transcript
+FROM interview i
+LEFT JOIN person p
+ON i.person_id=p.id
+WHERE p.name='Annabel Miller' OR p.name='Morty Schapiro'
+;
+
+# Narrow down the possible suspects based on gym check in date, membership status, and membership id clues
+
+SELECT name, membership_status, membership_id, check_in_date
+FROM get_fit_now_member 
+LEFT JOIN get_fit_now_check_in 
+ON get_fit_now_member.id=get_fit_now_check_in.membership_id
+WHERE membership_id LIKE '48Z%'
+AND membership_status='gold'
+;
+
+
+
+# Find out which of the 2 men has the car with a plate that included "H42W"
+
+SELECT person.name, drivers_license.plate_number
+FROM person
+JOIN drivers_license
+ON drivers_license.id = person.license_id
+WHERE plate_number LIKE "%H42W%" AND name = "Jeremy Bowers" OR name = "Joe Germuska"
+;
+
+# Now that we know the killer, interview him
+
+SELECT p.name, i.transcript
+FROM person p
+JOIN interview i
+ON p.id=i.person_id
+WHERE name = 'Jeremy Bowers'
+;
+
+# He says he was hired by someone and gives a description, use the description to narrow down her name 
+
+SELECT person.id, person.name,drivers_license.height, drivers_license.gender ,drivers_license.hair_color ,drivers_license.car_make ,drivers_license.car_model
+FROM drivers_license
+JOIN person
+ON person.license_id=drivers_license.id
+WHERE height BETWEEN 65 AND 67
+AND hair_color = "red"
+AND car_make = "Tesla"
+AND car_model = "Model S"
+;
+
+
+# Now find which of those women attended the SQL Symphony Concert 3 times in December 2017
+
+SELECT person.name, facebook_event_checkin.person_id, facebook_event_checkin.event_id, facebook_event_checkin.event_name, facebook_event_checkin.date
+FROM facebook_event_checkin
+JOIN person
+ON person.id=facebook_event_checkin.person_id
+WHERE name = "Red Korb"
+OR name = "Regina George"
+OR name = "Miranda Priestly" AND event_name = "SQL Symphony Concert"
+AND date LIKE "201712%"
+;
