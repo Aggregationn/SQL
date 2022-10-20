@@ -1,4 +1,4 @@
-# This is a collection of SQL I have written while completig a hacker rank study plan 'SQL I'
+# This is a collection of SQL I have written while completing a hacker rank study plan 'SQL I'
 
 # 595. Big Countries
 SELECT name, population, area
