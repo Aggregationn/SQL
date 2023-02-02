@@ -268,14 +268,10 @@ LIMIT 10
 Part 2: Inferences and Analysis
 
 1. Pick one city and category of your choice and group the businesses in that city or category by their overall star rating. Compare the businesses with 2-3 stars to the businesses with 4-5 stars and answer the following questions. Include your code.
-SELECT b.city, c.category
-FROM business b
-INNER JOIN category c
-ON b.id = c.business_id
-WHERE b.city = 'Markham' AND c.category = 'Asian Fusion'
+I chose Toronto and resturants
 	
 i. Do the two groups you chose to analyze have a different distribution of hours?
-
+WORK IN PROGRESS
 
 ii. Do the two groups you chose to analyze have a different number of reviews?
          
